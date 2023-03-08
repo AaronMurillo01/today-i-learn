@@ -46,6 +46,3 @@ const initialFacts = [
 // LINK TO APP SAMPLE DATA: https://docs.google.com/spreadsheets/d/1eeldcA_OwP4DHYEvjG0kDe0cRys-cDPhc_E9P9G1e3I/edit#gid=0
 
 // 👍 🤯 ⛔️
-curl 'https://zrqnxkljzekzeocliqhl.supabase.co/rest/v1/facts?select=id' \
--H "apikey: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InpycW54a2xqemVremVvY2xpcWhsIiwicm9sZSI6ImFub24iLCJpYXQiOjE2Nzc2MjY5OTYsImV4cCI6MTk5MzIwMjk5Nn0.4_3HoTQqEa__ug5siOwcQ8l5uBSP8MwUWUsekt6nTik" \
--H "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InpycW54a2xqemVremVvY2xpcWhsIiwicm9sZSI6ImFub24iLCJpYXQiOjE2Nzc2MjY5OTYsImV4cCI6MTk5MzIwMjk5Nn0.4_3HoTQqEa__ug5siOwcQ8l5uBSP8MwUWUsekt6nTik"

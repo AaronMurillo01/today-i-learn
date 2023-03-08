@@ -50,7 +50,28 @@ const factsList = document.querySelector(".facts-list");
 
 //Create DOM elements: Render fact in list
 factsList.innerHTML = "";
-createFactsList(initialFacts);
+
+//load data from Supabase
+loadFacts();
+
+async function loadFacts() {
+  const res = await fetch(
+    "https://zrqnxkljzekzeocliqhl.supabase.co/rest/v1/facts",
+    {
+      headers: {
+        apiKey:
+          "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InpycW54a2xqemVremVvY2xpcWhsIiwicm9sZSI6ImFub24iLCJpYXQiOjE2Nzc2MjY5OTYsImV4cCI6MTk5MzIwMjk5Nn0.4_3HoTQqEa__ug5siOwcQ8l5uBSP8MwUWUsekt6nTik",
+        authorization:
+          "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InpycW54a2xqemVremVvY2xpcWhsIiwicm9sZSI6ImFub24iLCJpYXQiOjE2Nzc2MjY5OTYsImV4cCI6MTk5MzIwMjk5Nn0.4_3HoTQqEa__ug5siOwcQ8l5uBSP8MwUWUsekt6nTik",
+      },
+    }
+  );
+  const data = await res.json();
+  // console.log(data);
+  // const filteredData = data.filter((fact) => fact.category === "society");
+
+  createFactsList(data);
+}
 
 function createFactsList(dataArray) {
   // factsList.insertAdjacentHTML("afterbegin", "<li>Aaron</li>");
@@ -66,11 +87,11 @@ function createFactsList(dataArray) {
           target="_blank"
           >(Source)</a>
     </p>
-    <span class="tag" style="background-color:
-    #3b82f6">${fact.category}</span>            
+    <span class="tag" style="background-color: ${
+      CATEGORIES.find((cat) => cat.name === fact.category).color
+    }">${fact.category}</span>            
   </li>`
   );
-  console.log(htmlArr);
   const html = htmlArr.join("");
   factsList.insertAdjacentHTML("afterbegin", html);
 }
@@ -86,6 +107,8 @@ btn.addEventListener("click", function () {
   }
 });
 
+console.log([7, 64, 6, -23, 11].filter((el) => el > 10));
+console.log([7, 64, 6, -23, 11].find((el) => el > 10));
 // let votesInteresting = 23;
 // let votesMindblowing = 5;
 // const text = "Lisbon is the capital of Portugal";
