@@ -1,3 +1,4 @@
+import { useState } from "react";
 import "./style.css";
 
 const initialFacts = [
@@ -34,21 +35,28 @@ const initialFacts = [
   },
 ];
 
+function Counter() {
+  const [count, setCount] = useState(0);
+
+  // btn.addEventListener('click', function()...)
+
+  return (
+    <div>
+      <span style={{ fontSize: "40px" }}>{count}</span>
+      <button className="btn btn-large" onClick={() => setCount((c) => c + 1)}>
+        +1
+      </button>
+    </div>
+  );
+}
+
 function App() {
-  const appTitle = "Today I Learned";
+  const [showForm, setShowForm] = useState(false);
+
   return (
     <>
-      {/* HEADER */}
-      <header className="header">
-        <div className="logo">
-          <img src="logo.png" height="68" width="68" alt="Today I Learn Logo" />
-          <h1>{appTitle}</h1>
-        </div>
-
-        <button className="btn btn-large btn-open">Share a fact</button>
-      </header>
-
-      <NewFactFom />
+      <Header showForm={showForm} setShowForm={setShowForm} />
+      {showForm ? <NewFactForm /> : null}
 
       <main className="main">
         <CategoryFilter />
@@ -58,7 +66,27 @@ function App() {
   );
 }
 
-function NewFactFom() {
+function Header({ showForm, setShowForm }) {
+  const appTitle = "Today I Learned";
+
+  return (
+    <header className="header">
+      <div className="logo">
+        <img src="logo.png" height="68" width="68" alt="Today I Learn Logo" />
+        <h1>{appTitle}</h1>
+      </div>
+
+      <button
+        className="btn btn-large btn-open"
+        onClick={() => setShowForm((show) => !show)}
+      >
+        {showForm ? "Close" : "Share a fact"}
+      </button>
+    </header>
+  );
+}
+
+function NewFactForm() {
   return <form className="fact-form">Fact form</form>;
 }
 
