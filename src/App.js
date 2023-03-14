@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import supabase from "./supabase";
 import "./style.css";
 
 const initialFacts = [
@@ -52,7 +53,28 @@ function Counter() {
 
 function App() {
   const [showForm, setShowForm] = useState(false);
-  const [facts, setFacts] = useState(initialFacts);
+  const [facts, setFacts] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
+
+  useEffect(function () {
+    async function getFacts() {
+      setIsLoading(true);
+      const { data: facts, error } = await supabase
+        .from("facts")
+        .select("*")
+        .order("votesInteresting", { ascending: false })
+        .limit(180);
+
+      console.log(facts);
+      console.log(error);
+
+      if (!error) setFacts(facts);
+      else alert("Error loading facts. Please try again later.");
+
+      setIsLoading(false);
+    }
+    getFacts();
+  }, []);
 
   return (
     <>
@@ -63,10 +85,15 @@ function App() {
 
       <main className="main">
         <CategoryFilter />
-        <FactList facts={facts} />
+
+        {isLoading ? <Loader /> : <FactList facts={facts} />}
       </main>
     </>
   );
+}
+
+function Loader() {
+  return <p className="message">Loading..</p>;
 }
 
 function Header({ showForm, setShowForm }) {
@@ -123,7 +150,7 @@ function NewFactForm({ setFacts, setShowForm }) {
 
     //2. VCheck if data is valid. If so, create a new fact.
     if (text && isValidHttpUrl(source) && category && textLength <= 200) {
-      //3. Create a ew fact object.
+      //3. Create a new fact object.
       const newFact = {
         id: Math.round(Math.random() * 1000000000),
         text,
